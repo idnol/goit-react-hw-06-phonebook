@@ -1,10 +1,19 @@
 import { ListItem } from '../ListItem/ListItem';
+import { useSelector } from 'react-redux';
 
-export const List = ({contacts, onDel}) => {
+export const List = () => {
+  const contacts = useSelector(state => state.contacts);
+  const filter = useSelector(state => state.filter);
+  console.log(contacts);
+
+  const contactArr = contacts.filter(item => {
+    return item.name.toLowerCase().includes(filter);
+  })
+
   return <ul>
-    {contacts.map(contact => (
+    {contactArr.map(contact => (
       <li key={contact.id}>
-        <ListItem id={contact.id} name={contact.name} number={contact.number} del={onDel} />
+        <ListItem id={contact.id} name={contact.name} number={contact.number} />
       </li>
     ))}
   </ul>
